@@ -16,6 +16,10 @@ namespace Test_Framework
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            using (var client = new TestContext())
+            {
+                client.Database.EnsureCreated();
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -23,8 +27,9 @@ namespace Test_Framework
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TestContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("TestContext")));
+            //services.AddDbContext<TestContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("TestContext")));
+            services.AddEntityFrameworkSqlite().AddDbContext<TestContext>();
             services.AddControllersWithViews();
         }
 

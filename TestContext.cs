@@ -9,18 +9,14 @@ namespace Test_Framework
 {
     public class TestContext : DbContext
     {
-
-        public TestContext(DbContextOptions<TestContext> options)
-            : base(options)
-        {
-        }
+        public TestContext() : base() { }
 
         public DbSet<ApiModel> Apis { get; set; }
         public DbSet<TestModel> Tests { get; set; }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    base.OnConfiguring(optionsBuilder);
-        //}
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Filename=TestApiDB.db");
+        }
     }
 }
