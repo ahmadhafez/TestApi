@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Test_Framework;
+using Test_Framework.Models;
 
 namespace Test_Framework.Controllers
 {

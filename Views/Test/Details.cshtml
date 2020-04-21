@@ -1,0 +1,45 @@
+﻿@model Test_Framework.Models.TestModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Test</h4>
+    <hr />
+    <form asp-controller="Test" asp-action="Run" method="post">
+        <!-- Input and Submit elements -->
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Variables)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Variables)
+                <input id="variables" name="variables" type="hidden" value="@Model.Variables" />
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Urls)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Urls)
+                <input id="Urls" name="Urls" type="hidden" value="@Model.Urls" />
+            </dd>
+        </dl>
+
+        <input type="submit" value="Run" class="btn-dark"/>
+
+    </form>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
