@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Test_Framework.Models;
 
-namespace Test_Framework
+namespace Test_Framework.Models
 {
     public class TestModel
     {
