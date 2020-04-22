@@ -35,7 +35,7 @@ namespace Test_Framework.Controllers
         public async Task<string> Run([Bind("ID,Name,Variables,Urls")] TestModel testModel)
         {
             JArray urls = JArray.Parse(testModel.Urls);
-            List<Dictionary<string, string>> paramList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(testModel.Variables);
+            List<Dictionary<string, object>> paramList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(testModel.Variables);
             var httpClient = new HttpClient();
             StringBuilder summary = new StringBuilder();
             summary.Append($"Number of urls: {urls.Count}");
@@ -66,7 +66,25 @@ namespace Test_Framework.Controllers
                 foreach (var variable in paramList)
                 {
                     var pair = variable.FirstOrDefault();
-                    string testValue = $"\"{pair.Key}\":\"{pair.Value}\"";
+                    string testValue = null;
+                    if (pair.Value == null)
+                    {
+                        testValue = $"\"{pair.Key}\":null";
+                    }
+                    else if (pair.Value.GetType() == typeof(string))
+                    {
+                        testValue = $"\"{pair.Key}\":\"{pair.Value}\"";
+                    }
+                    else if(pair.Value.GetType() == typeof(JObject))
+                    {
+                        string value = JsonConvert.SerializeObject(pair.Value);
+                        testValue = $"\"{pair.Key}\":{value}";
+
+                    }
+                    else
+                    {
+                        testValue = $"\"{pair.Key}\":{pair.Value}";
+                    }
                     traceDetails.Append($"Testing parameter: {pair.Key} with value {pair.Value}");
                     traceDetails.Append(Environment.NewLine);
                     bool test = body.Contains(testValue, StringComparison.InvariantCultureIgnoreCase);
